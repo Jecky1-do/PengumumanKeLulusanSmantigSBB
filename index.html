@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Kelulusan - SMA Negeri 3 Seram Bagian Barat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================= VARIABLES ================= */
+        :root {
+            --navy: #0a192f;
+            --gold: #d4af37;
+            --white: #ffffff;
+            --light-bg: #f4f6f9;
+            --text-dark: #333333;
+            --success-bg: #d4edda;
+            --success-text: #155724;
+            --danger-bg: #f8d7da;
+            --danger-text: #721c24;
+            --warning-bg: #fff3cd;
+            --warning-text: #856404;
+        }
+
+        /* ================= GLOBAL STYLES ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(10, 25, 47, 0.1);
+            padding: 40px;
+            text-align: center;
+            border-top: 5px solid var(--gold);
+        }
+
+        /* SPA Transitions */
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= TYPOGRAPHY & HEADER ================= */
+        h1, h2, h3 {
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+        
+        .header-logo {
+            width: 90px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .svg-icon {
+            width: 60px;
+            fill: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        /* ================= BUTTONS ================= */
+        .btn {
+            background-color: var(--navy);
+            color: var(--white);
+            border: 2px solid var(--navy);
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 10px 5px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--white);
+            color: var(--navy);
+        }
+
+        .btn-gold {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: var(--navy);
+        }
+
+        .btn-gold:hover {
+            background-color: var(--white);
+            color: var(--gold);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+
+        /* ================= PAGE 1: HOME ================= */
+        .stats-box {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .stats-box h4 {
+            color: var(--navy);
+            font-size: 20px;
+        }
+
+        .stats-box p {
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* Timer */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0 30px 0;
+        }
+
+        .timer-box {
+            background: var(--navy);
+            color: var(--white);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+        }
+
+        .timer-box span {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .timer-box small { font-size: 12px; }
+
+        /* ================= PAGE 2: SAMBUTAN ================= */
+        .sambutan-text {
+            text-align: justify;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .ttd-container {
+            text-align: right;
+            margin-top: 40px;
+        }
+
+        .ttd-img {
+            max-width: 150px;
+            margin: 10px 0;
+        }
+
+        /* ================= PAGE 3: FORM CEK ================= */
+        .input-group {
+            margin: 30px 0 20px 0;
+        }
+
+        .input-group input {
+            width: 80%;
+            max-width: 400px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            border-color: var(--gold);
+        }
+
+        .info-bottom {
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            border-left: 4px solid var(--navy);
+            text-align: left;
+            color: var(--navy);
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result-lulus { background: var(--success-bg); color: var(--success-text); border: 1px solid #c3e6cb; }
+        .result-gagal { background: var(--danger-bg); color: var(--danger-text); border: 1px solid #f5c6cb; }
+        .result-error { background: var(--warning-bg); color: var(--warning-text); border: 1px solid #ffeeba; }
+
+        /* Print Header Style (Fallback jika tidak ada link) */
+        .print-kop {
+            display: none;
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .print-kop img { width: 80px; position: absolute; left: 40px; }
+        .print-kop h3, .print-kop p { color: #000; margin: 0; }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        /* ================= PRINT CSS ================= */
+        @media print {
+            body { background: #fff; color: #000; }
+            .container { margin: 0; padding: 0; width: 100%; max-width: 100%; }
+            .card { box-shadow: none; border: 2px solid #000; padding: 30px; border-top: 2px solid #000; margin: 20px; }
+            .no-print, footer, .btn, .input-group, .info-bottom { display: none !important; }
+            .result-box { border: none !important; background: transparent !important; color: #000 !important; padding: 0; margin-top: 20px;}
+            .print-kop { display: block !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @media (max-width: 600px) {
+            .timer-box { min-width: 60px; padding: 10px; }
+            .timer-box span { font-size: 20px; }
+            .print-kop img { position: static; margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <section id="page-home" class="page active">
+            <div class="card">
+                <img src="https://valuable-salmon-e5tddx5agu.edgeone.app" alt="Logo Sekolah" class="header-logo" onerror="this.style.display='none'">
+                <br>
+                <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3L1 9L5 11.18V17C5 18.1 8.13 19 12 19C15.87 19 19 18.1 19 17V11.18L21 10.09V17H23V9L12 3ZM12 16.8C8.82 16.8 7 16.12 7 15V12.27L12 15L17 12.27V15C17 16.12 15.18 16.8 12 16.8ZM12 12.75L4.21 8.5L12 4.25L19.79 8.5L12 12.75Z"/>
+                </svg>
+                
+                <h1>Pengumuman Kelulusan Siswa</h1>
+                <h3>SMA Negeri 3 Seram Bagian Barat</h3>
+                <p>Tahun Pelajaran 2025/2026</p>
+
+                <div class="stats-box">
+                    <p>Tanggal Pengumuman:</p>
+                    <h4>4 Mey 2026 | 13:00 WIT</h4>
+                    <hr style="margin: 10px 0; border: 0; border-top: 1px solid rgba(0,0,0,0.1);">
+                    <p style="color: var(--navy);">Silakan pantau hitung mundur di bawah ini untuk melihat hasil kelulusan Anda secara mandiri.</p>
+                </div>
+
+                <div id="timer-wrapper">
+                    <p style="font-weight: 600;">Waktu Menuju Pengumuman:</p>
+                    <div class="timer-container">
+                        <div class="timer-box"><span id="days">00</span><small>Hari</small></div>
+                        <div class="timer-box"><span id="hours">00</span><small>Jam</small></div>
+                        <div class="timer-box"><span id="minutes">00</span><small>Menit</small></div>
+                        <div class="timer-box"><span id="seconds">00</span><small>Detik</small></div>
+                    </div>
+                </div>
+
+              <button id="btn-masuk" class="btn" disabled>PENGUMUMAN BELUM DIBUKA</button>
+            </div>
+        </section>
+
+        <section id="page-sambutan" class="page">
+            <div class="card">
+                <h2>Sambutan Kepala Sekolah</h2>
+                <hr style="border: 1px solid var(--gold); margin-bottom: 20px;">
+                
+                <div class="sambutan-text">
+                    <p>Puji syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa atas rahmat dan karunia-Nya. Hari ini adalah momen bersejarah bagi para siswa-siswi kelas XII SMA Negeri 3 Seram Bagian Barat Tahun Pelajaran 2025/2026.</p>
+                    <br>
+                    <p>Anak-anakku sekalian yang saya cintai dan banggakan,Tiga tahun lamannya perjalanan kalian menuntut ilmu, mengasah ketrampilan dan membentuk karakter di sekolah ini dan tentunya telah kalian lalui dengan penuh perjuangan. hari ini adalah puncak dari perjuangan kalian.Apapun hasil yang kalian terima hari ini, jadikanlah itu sebagai batu loncatan untuk meraih masa depan yang gemilang. Teruslah belajar, berkarya, dan jaga nama baik almamater tercinta.</p>
+                    <br>
+                    <p>Selamat kepada yang dinyatakan lulus. Bagi yang belum, jalan masih panjang dan kesempatan masih terbuka lebar. Tetap semangat dan pantang menyerah! Atas nama seluruh dewan Guru dan staf kami mohon maaf, jika selama mendidik terdapat kekurangan dan kehilafan, kami mendokan yang terbaik untuk kesuksesan masa depan kalian.... Tuhan Menyertai Kita semua</p>
+                </div>
+
+                <div class="ttd-container">
+                    <p>Seram Bagian Barat, 5 Mei 2026<br>Kepala Sekolah,</p>
+                    <img src="https://economic-turquoise-mn8lspyrb3.edgeone.app" alt="Tanda Tangan Kepala Sekolah" class="ttd-img" onerror="this.style.display='none'">
+                    <p><strong>Wilhelmina Tomatala S.Pd, M.Pd</strong><br>NIP. 197006112005012006</p>
+                </div>
+
+                <div class="no-print" style="margin-top: 30px;">
+                    <button class="btn" onclick="showPage('page-home')">Kembali ke Beranda</button>
+                    <button class="btn btn-gold" onclick="showPage('page-cek')">Lanjut Cek Kelulusan</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-cek" class="page">
+            <div class="card">
+                
+                <div class="print-kop">
+                    <img src="https://valuable-salmon-e5tddx5agu.edgeone.app" alt="Logo">
+                    <h3>SURAT KETERANGAN LULUS</h3>
+                    <p>SMA NEGERI 3 SERAM BAGIAN BARAT</p>
+                    <p>Tahun Pelajaran 2025/2026</p>
+                </div>
+
+                <h2 class="no-print">Cek Kelulusan Siswa</h2>
+                <p class="no-print">Masukkan Nomor Induk Siswa Nasional (NISN) Anda pada kolom di bawah ini.</p>
+                
+                <div class="input-group no-print">
+                    <input type="text" id="input-nisn" placeholder="Masukkan NISN Anda..." autocomplete="off">
+                </div>
+
+                <div class="no-print">
+                    <button class="btn" onclick="showPage('page-sambutan')">Kembali</button>
+                    <button class="btn btn-gold" onclick="cekKelulusan()">CEK KELULUSAN</button>
+                </div>
+
+                <div id="result-container" class="result-box">
+                    <h3 id="res-nama" style="margin-bottom: 5px; color: inherit;">-</h3>
+                    <p style="margin-bottom: 5px;">NISN: <span id="res-nisn">-</span></p>
+                    
+                    <h2 id="res-status" style="margin: 20px 0; font-size: 32px; color: inherit;">-</h2>
+                    <p id="res-pesan"></p>
+                    
+                    <div id="print-btn-container" class="no-print" style="margin-top: 25px; display: none;">
+                        </div>
+                </div>
+
+                <div class="info-bottom no-print">
+                    <strong>INFORMASI PENTING:</strong><br>
+                    SILAHKAN MASUKAN NISN YANG VALID, JIKA TERKENDALA HUBUNGI PANITIA UJIAN (KONTAK : 082198521571)
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="no-print">
+        &copy; <span id="currentYear"></span> SMA Negeri 3 Seram Bagian Barat. All Rights Reserved.
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // ====================================================================
+        // DATABASE 235 SISWA
+        // ====================================================================
+        const dataCSV = `No,Nama,NISN,Status Kelulusan,SERTIFIKAT LULUS
+1,AGNESLI PEEA,0095934167,LULUS,https://ibb.co.com/ynttW55G
+2,Alexsandra Jennifer Sabandar,0082238900,LULUS,https://ibb.co.com/5xJRqZRK
+3,AURELLIA P. D. RISAMASSU,0093555380,LULUS,https://ibb.co.com/0yfryXwK
+4,AYU PRATIWI,0087745653,LULUS,https://ibb.co.com/chCypvtc
+5,CHARLENE FERDINANDUS,0083721869,LULUS,https://ibb.co.com/3y6RQQsb
+6,CHIKA PRICILIA LATURETTE,0087172019,LULUS,https://ibb.co.com/prvPWZ8Q
+7,Chrilien Meisyel Pariama,0088552344,LULUS,https://ibb.co.com/Fk6xYs2t
+8,DEA ELAKE,0081113533,LULUS,https://ibb.co.com/h1cBvPW6
+9,ELFIRA HASAN,0086305998,LULUS,https://ibb.co.com/nqPwwPgz
+10,Emiel Adelvos Salenussa,0084926287,LULUS,https://ibb.co.com/rGXTmL9B
+11,Farel Eduard Huwae,0073809950,LULUS,https://ibb.co.com/6RDjP49D
+12,Fetric Pasalbessy,0081656131,LULUS,https://ibb.co.com/NgmKW1Ls
+13,Fitriani Soulissa,0085437031,LULUS,https://ibb.co.com/Zv6C96P
+14,FRANS PESULIMA,0089857884,LULUS,https://ibb.co.com/YFfcz6Gy
+15,GIAN. C. F. RUMAWATINE,0078064934,LULUS,https://ibb.co.com/chWs3bbz
+16,INDA MOA,0086777648,LULUS,https://ibb.co.com/pDsS05W
+17,JESY.M. LATUPEIRISSA,0071559007,LULUS,https://ibb.co.com/ksnX0yV2
+18,JOSHUA FRITS MALAWAU,0086460856,LULUS,https://ibb.co.com/Rpk2NwyM
+19,Joshua Souisa,0074471030,LULUS,https://ibb.co.com/67HnwKyN
+20,Julieven Pattinasarany,0083897456,LULUS,https://ibb.co.com/twTs45Rg
+21,Karlis Paula Kakisina,0082455505,LULUS,https://ibb.co.com/yBKgfPd0
+22,KELVIN JOSEPH IMBING,0087211050,LULUS,https://ibb.co.com/Z6gTbCHP
+23,MAHARERA AZHARI,0089892939,LULUS,https://ibb.co.com/tpjM71qR
+24,MARFEL GABRIEL SARISUWAY,0089123371,LULUS,https://ibb.co.com/JFjYG7s2
+25,MARGARETHA PATTY,0086123971,LULUS,https://ibb.co.com/DHh9ctYv
+26,Mireldha Oxiane Tamtelahitu,0082900153,LULUS,https://ibb.co.com/rGY7VZ8s
+27,MUTIARA WIRA ANANDA,0081182599,LULUS,https://ibb.co.com/wr3LNDb9
+28,NAVA NUNUELA,0069454017,LULUS,https://ibb.co.com/7dD3TYxT
+29,PUTRY RAMADHANY NARDI,0083162609,LULUS,https://ibb.co.com/dwTK7N6W
+30,Reinhard Adillha Imanuel Turukay,0081915456,LULUS,https://ibb.co.com/GQHqsLZ5
+31,SESKA SIAHAYA,0087261674,LULUS,https://ibb.co.com/v4YfwC8s
+32,SILFANA RAMANOVA SILAYA,0083615204,LULUS,https://ibb.co.com/d0SyRXnk
+33,Sitna Anugerah Leimosol,0087021208,LULUS,https://ibb.co.com/N2x8VPmv
+34,Theo Tetelepta,0089652235,LULUS,https://ibb.co.com/xnWs7zG
+35,VICHRIA DAMAYANTI KILIAN,0087021208,LULUS,https://ibb.co.com/W4gHqMrf
+36,ALIN LUMASANAY,0076632660,LULUS,https://ibb.co.com/JWfPqjWK
+37,Andris M. Luhukay,0087881876,LULUS,https://ibb.co.com/FbWKCyrQ
+38,Angardo Novsera Latuheru,0088043830,LULUS,https://ibb.co.com/fVfXHsqg
+39,Angel Livia Haumahu,0088414786,LULUS,https://ibb.co.com/Xrg1nZJ2
+40,AVITHALYA SAHETAPY,0083291092,LULUS,https://ibb.co.com/9m7B2m89
+41,Brenda Aksamina Manintamahu,3096003746,LULUS,https://ibb.co.com/PzCJvhGf
+42,CHELSEA TUTUPARY,0087375898,LULUS,https://ibb.co.com/6RQZs5h9
+43,Dani Marsel Sahulata,0083065590,LULUS,https://ibb.co.com/2YHN89Sr
+44,Debora Aulya Siahaya,0084203726,LULUS,https://ibb.co.com/Q3hKptXc
+45,ELSINA .N. MATITAL,0089599504,LULUS,https://ibb.co.com/r2RQDCb3
+46,Giovenly Elohim Sapasuru,0081693391,LULUS,https://ibb.co.com/CKjmcKv8
+47,GISELA SASAKE,0087579014,LULUS,https://ibb.co.com/gFdS8dpG
+48,Gloria Imanuella Lekahena,0082345754,LULUS,https://ibb.co.com/0gDRZqg
+49,GRACE SASAKE,0088005155,LULUS,https://ibb.co.com/wrKHdW4v
+50,HENI YAKOBA SEAY,0088062518,LULUS,https://ibb.co.com/gLQ7jJ9j
+51,HERBERT D.W. PATTIASINA,0085737943,LULUS,https://ibb.co.com/5x6mDcqp
+52,JEAN GRACIELLA KIPUW,0084396432,LULUS,https://ibb.co.com/35dTs6sY
+53,Jerrikho S. Wahilaitwan,3081462588,LULUS,https://ibb.co.com/fYDBhNzS
+54,JESSE MIRALDA SEILATU,0087403225,LULUS,https://ibb.co.com/nMGQk6ZC
+55,JEVON FRANKLYN PAULUS,0089396168,LULUS,https://ibb.co.com/PvrHTDdv
+56,JONEA BELLICIA SALENUSSA,0086294365,LULUS,https://ibb.co.com/Zk6jSJH
+57,JOSUA ORWELL RARSINA,0082466399,LULUS,https://ibb.co.com/xKvspXjd
+58,JOVANDRO PUTRA TUAMELY,0084812396,LULUS,https://ibb.co.com/3yPB5pT9
+59,JUWIL NANDITO AHIYATE,0083749124,LULUS,https://ibb.co.com/xSCMsYTh
+60,KRISTIANIE LUMATALALE,0084603522,LULUS,https://ibb.co.com/rGRsqqHd
+61,MARLIN SAPASURU,0085068959,LULUS,https://ibb.co.com/ynQ6sYG4
+62,MARSYA VALIN YATALUAN,0084062805,LULUS,https://ibb.co.com/V0QRf7nF
+63,MEILANI. F. TETERISSA,0083142696,LULUS,https://ibb.co.com/VpDQvQkK
+64,MICHELLE HURULEAN,0072589003,LULUS,https://ibb.co.com/PGMgMqWF
+65,MIKHAEL CLIPHARD LESIASEL,0086718919,LULUS,https://ibb.co.com/xqphxGrH
+66,Ona Krisanti Waifitu,0072454838,LULUS,https://ibb.co.com/603zPrgR
+67,ROSALIA MENTARI SURIPATTY,0088278379,LULUS,https://ibb.co.com/HDVgfCPR
+68,STEVE IMANNUEL PURENG,0091677386,LULUS,https://ibb.co.com/Ps6m5qz9
+69,Valentino Elake,0084728840,LULUS,https://ibb.co.com/9H586SBb
+70,Vemi Juliani Corputty,0086739194,LULUS,https://ibb.co.com/TxFH9s9z
+71,Vichlaus Karel Salelua,0085994425,LULUS,https://ibb.co.com/tt29fnj
+72,AL-AMIN WABULLA,0081417065,LULUS,https://ibb.co.com/DP1CnLXn
+73,Aris Vetly Latusia,0086258124,LULUS,https://ibb.co.com/YT8D6Mm0
+74,Brayen Jacob Marthin Patty,0087919920,LULUS,https://ibb.co.com/G4LY1W5B
+75,CHRISTI NATALIO SALENUSSA,0082736469,LULUS,https://ibb.co.com/LX23hDr2
+76,DITA KURNIA PUTRI,0089749137,LULUS,https://ibb.co.com/hxRHXMjm
+77,EVANJELIS GLEDYS JESAYAS,0085025814,LULUS,https://ibb.co.com/35m1HYFx
+78,FEDRY ENGEL de QELJOE,0083634711,LULUS,https://ibb.co.com/dJJ5Mrwn
+79,FEIREND ANGEL TIBALIA,0081695351,LULUS,https://ibb.co.com/XZ2M85f0
+80,Feivel Immanuel Sitanaya,0082807389,LULUS,https://ibb.co.com/N2GJK4Hv
+81,FELIKS. J. LAMATOKAN,3084747975,LULUS,https://ibb.co.com/FLSYQVTv
+82,Fillian. D. Lumaupuy,0074312666,LULUS,https://ibb.co.com/jZJHqFHw
+83,Franciska Lintang Oktaviani,0089122757,LULUS,https://ibb.co.com/ff2Vwnj
+84,Ghesya Selda Sabandar,0076522681,LULUS,https://ibb.co.com/VYWd14Qj
+85,Hesly Pattipeilohy,0088639283,LULUS,https://ibb.co.com/Wr3pWk8
+86,JAMAL SAMAL,0086198725,LULUS,https://ibb.co.com/3Zwyc0q
+87,Joana Gracia Kainama,0087391838,LULUS,https://ibb.co.com/yFbSH3sB
+88,JUNESIA MICHELLA MOLLE,0087734120,LULUS,https://ibb.co.com/qLzqwDBK
+89,Kevin Renmaur,0068871697,LULUS,https://ibb.co.com/VcyQV0Rp
+90,Kristo Apanath,0087266321,LULUS,https://ibb.co.com/JRt6PM6j
+91,LAILA ODE,0084772434,LULUS,https://ibb.co.com/mCh5kwj0
+92,Magdalena Sujin Titawanno,0086814454,LULUS,https://ibb.co.com/8Lq8rHH7
+93,Maks Nindatu,0081449672,LULUS,https://ibb.co.com/Tq8f4bqv
+94,MARCELLO KEVIN KESAULYA,0087906988,LULUS,https://ibb.co.com/wN3Q9ztd
+95,Marlisa Elizabeth Silpatan,0088014061,LULUS,https://ibb.co.com/prBfjjMT
+96,MARLON SALENUSSA,0075427981,LULUS,https://ibb.co.com/7dbPk4Bk
+97,Marsya Melna Soumahu,0084115485,LULUS,https://ibb.co.com/r25f3S45
+98,Marsyanda Hehanussa,0085870908,LULUS,https://ibb.co.com/CpGx6XkY
+99,Marthen Samasal,0083385066,LULUS,https://ibb.co.com/Hp3PPRY0
+100,MUTIARA RUTYANTI KLERUCK,0081936081,LULUS,https://ibb.co.com/mrCDBTbW
+101,NATASIA STEVANI SELANNO,0081425493,LULUS,https://ibb.co.com/27yHYPMS
+102,NELSON ALDRI PUTTILEIHALAT,0088379266,LULUS,https://ibb.co.com/fVvd8qMq
+103,Valerius J. Leatemia,0082571847,LULUS,https://ibb.co.com/bgZz8pRx
+104,VICTOR CHAERLY RUMALATU,0084063973,LULUS,https://ibb.co.com/JwMKN2pM
+105,Vita Efruan,0083726375,LULUS,https://ibb.co.com/JWPWSXFZ
+106,WIDYA WOLIO,0086850015,LULUS,https://ibb.co.com/twtxVg1t
+107,Yohana Tantri .I.M. Resbal,0081661533,LULUS,https://ibb.co.com/bhx0ySX
+108,Afjal Mihrab Kaisupy,0077059509,LULUS,https://ibb.co.com/MxqFYtvx
+109,AHMAD ALFIANSYAH LAPATARA,0009882733,LULUS,https://ibb.co.com/Q735WqDG
+110,AKSE JENA NAYATUEN,0088357955,LULUS,https://ibb.co.com/fGKfdg1f
+111,BERNABAS JULIAN BURNAMA,0065551011,LULUS,https://ibb.co.com/N6xMrpP8
+112,CENDY LEKALAETTE,0072004816,LULUS,https://ibb.co.com/Mw6TN3M
+113,Chersy Puttileihalat,0089791939,LULUS,https://ibb.co.com/Yrjk8dz
+114,Desy Sulilatu,0081023523,LULUS,https://ibb.co.com/RFM5dzD
+115,Diago Kakisina,0085880596,LULUS,https://ibb.co.com/13r8yXr
+116,EFAN ZALES LAPALELO,0044061838,LULUS,https://ibb.co.com/XkrRZnJc
+117,FARLAN AMIRUDIN,0078943568,LULUS,https://ibb.co.com/HDz7tfdX
+118,Ferdinan Siahaya,0074368126,LULUS,https://ibb.co.com/ycv8sP3k
+119,GALLANG NURUE,3089432650,LULUS,https://ibb.co.com/F4XKXckj
+120,GERALD SOULINAY,0087282144,LULUS,https://ibb.co.com/KpvW3xp9
+121,JUARDI WALI,0079157558,LULUS,https://ibb.co.com/93ddThRg
+122,Marsel Lambertus Rihna,0084063272,LULUS,https://ibb.co.com/p68hMk0R
+123,NANDA AMALIA,0084332108,LULUS,https://ibb.co.com/kVfqtqnR
+124,NINING,0074979667,LULUS,https://ibb.co.com/p6DCDKwk
+125,Nu'man Tsabit Waly,0087865958,LULUS,https://ibb.co.com/KzrZNtbS
+126,Obeth Siahaya,0075682034,LULUS,https://ibb.co.com/7JLwhNLz
+127,ODE NUR CAHYA,0086741668,LULUS,https://ibb.co.com/931Nntsn
+128,OLIN NIAY,0074433154,LULUS,https://ibb.co.com/XkJVr52B
+129,PENINA LUMULY,0085331241,LULUS,https://ibb.co.com/4ZHsRyDC
+130,RAHMAT FAJRI LA BAHARUDIN,0084214100,LULUS,https://ibb.co.com/yB66mV9w
+131,SILVIA SASAKE,0075858103,LULUS,https://ibb.co.com/N6m6hz5j
+132,WA HARA,0088972763,LULUS,https://ibb.co.com/VcqVhwtk
+133,WA ODE MELANI,3081878370,LULUS,https://ibb.co.com/ds7Y3dNV
+134,WANDA,0088567521,LULUS,https://ibb.co.com/S4tf31h6
+135,Yohanis Rangkoly,0093651093,LULUS,https://ibb.co.com/kgzKMDBB
+136,YONGKI TOUWELY,0077260820,LULUS,https://ibb.co.com/jvc8FSdt
+137,ADE PASCARIO SILUBUN,0087305296,LULUS,https://ibb.co.com/WpVrb8SS
+138,ALBERTINA LATURAKE,0073854884,LULUS,https://ibb.co.com/1ts94Rrd
+139,ANATASYA RIVALNI PUTNARUBUN,0079927437,LULUS,https://ibb.co.com/qhhYBgd
+140,CHELSY KUNUELA,0089279206,LULUS,https://ibb.co.com/Df5ZDmP6
+141,Chrismendo Alvaro Latumairissa,0087012964,LULUS,https://ibb.co.com/bM9zW36J
+142,CILLINDION LUMULY,0088175269,LULUS,https://ibb.co.com/CswHcjfd
+143,Clarissa Vianna Rumpuin,0082838647,LULUS,https://ibb.co.com/DHLRX82S
+144,CLAUDIA LATURAKE,0082774999,LULUS,https://ibb.co.com/p6RPcMT7
+145,DENIS FRENKO LATEKAY,0087924822,LULUS,https://ibb.co.com/D0WsmRC
+146,Irene Salenussa,0089229741,LULUS,https://ibb.co.com/ksd2GDtV
+147,JAEL G. SAPULETTE,0084601029,LULUS,https://ibb.co.com/jZyzKCb1
+148,Joy Danisye Kukupessy,0081709645,LULUS,https://ibb.co.com/4wVx1KrL
+149,JULIAN JAMES MATAYANE,0087829317,LULUS,https://ibb.co.com/fYXzYMK1
+150,KAREL YANSEN MAKALUY,0089826060,LULUS,https://ibb.co.com/RTz5PGxG
+151,KESYA YACOB,0091665943,LULUS,https://ibb.co.com/RGbGr2MS
+152,LEONARDO KWALOMINE,0075444772,LULUS,https://ibb.co.com/PZCjwhft
+153,Lionel Esra Mailuhu,0079148077,LULUS,https://ibb.co.com/F4KFyxhK
+154,Marlina Sohilait,0075070714,LULUS,https://ibb.co.com/7NrK0fH2
+155,MARSEL PARERA,0082747438,LULUS,https://ibb.co.com/9mDZFjqc
+156,Marselo Mandaku,0082597568,LULUS,https://ibb.co.com/yBbSmzsw
+157,MEXSY YATALUAN,0069770784,LULUS,https://ibb.co.com/wnZHQ7f
+158,Nali Natalia Lumasu,0082245072,LULUS,https://ibb.co.com/v4QZHqVL
+159,OLIVIA LUMAPUY,0085594945,LULUS,https://ibb.co.com/DDLmQjnN
+160,PONCIANUS DANIEL RUSIN,0088359051,LULUS,https://ibb.co.com/svF0Sm89
+161,PRISCA APRILLIA PIRSOUW,0085999170,LULUS,https://ibb.co.com/BKjFRBG1
+162,Ricky Isak Sahulata,0083505195,LULUS,https://ibb.co.com/wZTCfHYh
+163,Rixon Agustinus Pesireron,0087029911,LULUS,https://ibb.co.com/dwmzxzkT
+164,RONALDO MOSES SAISELAR,0071286197,LULUS,https://ibb.co.com/ycprhcJR
+165,SAMY  METANFANUAN,0077000605,LULUS,https://ibb.co.com/ZR4TxgMd
+166,STEVANI ASTRID BURNAMA,0088063989,LULUS,https://ibb.co.com/hxqN8BpJ
+167,WELSI KEIWURY,0083401568,LULUS,https://ibb.co.com/cSVGx6cs
+168,YONDRI V. MATITAL,0085150310,LULUS,https://ibb.co.com/TBtS476W
+169,Aggung Ryan Souhoka,0088873687,LULUS,https://ibb.co.com/1tVNyrjc
+170,AIRIN L. LUMATALALE,0077997623,LULUS,https://ibb.co.com/SDKH2GQY
+171,Brokhlin Eygrid Manuputty,0087408057,LULUS,https://ibb.co.com/mrwffNVM
+172,Chrisdanniel Pattipeilohy,0082984189,LULUS,https://ibb.co.com/VWkNdJFq
+173,DARIUS PABERU,0087938073,LULUS,https://ibb.co.com/vCC05sbz
+174,DEREK LEKALAET,0089978189,LULUS,https://ibb.co.com/Y4yTcRTN
+175,Erly Racya Martin Matulessy,0082718011,LULUS,https://ibb.co.com/hx7QHdmY
+176,Farel Colinz Tamaela,0084611607,LULUS,https://ibb.co.com/nXV1TN4
+177,Fendris B Memed,0089626872,LULUS,https://ibb.co.com/Fqq8NMHy
+178,Fransina Supulatu,0076294895,LULUS,https://ibb.co.com/jvVyc9fB
+179,Fridela Salenussa,0083284730,LULUS,https://ibb.co.com/VpzLWKTs
+180,JAKOB DASKUNDA,0076928614,LULUS,https://ibb.co.com/DfYFY5pR
+181,JEN DEWY SAPASURU,0099753815,LULUS,https://ibb.co.com/tpNFGYzb
+182,Jeni Lumatalale,0087360809,LULUS,https://ibb.co.com/mrRrbY26
+183,Juan Adri Lessy,0082510048,LULUS,https://ibb.co.com/N6gJQhmV
+184,JULIAND SOUHALY,0035182220,LULUS,https://ibb.co.com/PZqfGGft
+185,Karel Alberth Lumapuy,0081962372,LULUS,https://ibb.co.com/67J53N3C
+186,Krisando Latulola,0088909649,LULUS,https://ibb.co.com/pjmtbxZy
+187,LIDIA TUHUMENA,0082396412,LULUS,https://ibb.co.com/vxWg6vvm
+188,Lionel Yozsi Matinahoru,0087665837,LULUS,https://ibb.co.com/gbJFS12G
+189,MARLON LATURETTE,0071533002,LULUS,https://ibb.co.com/9m3NPB5b
+190,MARSYA KWALOMINE,0088592124,LULUS,https://ibb.co.com/Ppxcqwz
+191,Melvin Nomanzen Nixon Supusepa,0088519806,LULUS,https://ibb.co.com/j91gM1cX
+192,ONALI MAKALUY,0075720814,LULUS,https://ibb.co.com/4Z0sY58F
+193,Pricilia Astin Manakane,0089788635,LULUS,https://ibb.co.com/MxMpSJDP
+194,Refandro Salenussa,0085784610,LULUS,https://ibb.co.com/PGt8rP7Y
+195,RICHO BRIAN SUPULATU,0079924828,LULUS,https://ibb.co.com/PzY1878D
+196,Rieska Vivi Makaruku,0087532866,LULUS,https://ibb.co.com/4RGkym05
+197,Ruth  Makaruku,0085673307,LULUS,https://ibb.co.com/8Fh6bdw
+198,SALY SALENUSSA,0079128088,LULUS,https://ibb.co.com/d4v7z05j
+199,SENDI NURUWE,0073153802,LULUS,https://ibb.co.com/VcgC33ty
+200,VIN SUPULATU,0075169447,LULUS,https://ibb.co.com/Q36bDMJs
+201,YOHANES PAAYS,0074219397,LULUS,https://ibb.co.com/zVY7vgkR
+202,ADENESIA FATRESIA SULLILATU,0085296362,LULUS,https://ibb.co.com/S4MZsdbx
+203,AGUNG SYUKUR PIRSOUW,0079207352,LULUS,https://ibb.co.com/PGG8rR4B
+204,Bramhart Laisina,0083941157,LULUS,https://ibb.co.com/qLLqtvfN
+205,BRIAN TIPAHEUW,0074528954,LULUS,https://ibb.co.com/wNH5FJfg
+206,Depalyon Silaholo,0083022372,LULUS,https://ibb.co.com/0RWXZ3Rj
+207,DEVI WOLIO,0087443626,LULUS,https://ibb.co.com/fdYP8HtP
+208,ELISA GLAN PATTY,0084360168,LULUS,https://ibb.co.com/GXXGrNZ
+209,Enjel Putri Alakaman,0072876682,LULUS,https://ibb.co.com/218pztRK
+210,EVAN CHRISYE SASAKE,0087739200,LULUS,https://ibb.co.com/mVVtzmcv
+211,FIDA LUMULY,0086405118,LULUS,https://ibb.co.com/21vqd3YK
+212,Frando Jacxel Lewaherilla,0089382923,LULUS,https://ibb.co.com/JFdmyWwx
+213,Grace  Risaputty,0084008751,LULUS,https://ibb.co.com/KjhXChs3
+214,Hari Tri Ramadani Ikro,0083292328,LULUS,https://ibb.co.com/xqNQ3kSc
+215,JELINA LUMATALALE,0072707928,LULUS,https://ibb.co.com/wZFm4HtM
+216,JELVIN LUMULY,0075008696,LULUS,https://ibb.co.com/GwdxGBP
+217,Joferno Samuel Kikalessy,0087584195,LULUS,https://ibb.co.com/5hnjGbng
+218,JUAND RUMPENIAK,0084207311,LULUS,https://ibb.co.com/4R7PqSBN
+219,Julio. A. Siwabessy,0087040034,LULUS,https://ibb.co.com/0y1TT1zb
+220,Lionel Fransesc Riry,0141601381,LULUS,https://ibb.co.com/DPHDdrDD
+221,M.FADLAN HASAN NURLETTE,0072373081,LULUS,https://ibb.co.com/SDxDdxZy
+222,MAIKEL RUMANTENAN,0081465630,LULUS,https://ibb.co.com/G3njhgYS
+223,MARVEL. R. MATINAHORUW,0082181311,LULUS,https://ibb.co.com/99ZT11Xj
+224,Maryo Bahy,0081298161,LULUS,https://ibb.co.com/jkwfRP6F
+225,MELKI SALENUSSA,0068349876,LULUS,https://ibb.co.com/v42skjb2
+226,MONIKA LEKALAET,0084022520,LULUS,https://ibb.co.com/LXvT9n9Q
+227,MUHAMAD FAJRIN,0086516586,LULUS,https://ibb.co.com/3ypqs6MH
+228,NAFTALI MAKARUKU,0047808391,LULUS,https://ibb.co.com/gLkLbRx7
+229,Nasya Henni Niay,0075010578,LULUS,https://ibb.co.com/p6f9X02G
+230,RAMSAMSON LATURAKE,0071184352,LULUS,https://ibb.co.com/TFbvx2n
+231,ROMI MARIO SIHASALE,0071191415,LULUS,https://ibb.co.com/GfBfMyyL
+232,SALLYA. A. LUMULY,0073835186,LULUS,https://ibb.co.com/8nPCPvvg
+233,Stevan Batles Latue,0082378071,LULUS,https://ibb.co.com/QFVhz3by
+234,THASYA YEIMO,0084007482,LULUS,https://ibb.co.com/R4MXb7bH
+235,Zulfikri Rahmat Dani Papalia,0086697667,LULUS,https://ibb.co.com/chKRSTCs`;
+
+        // ====================================================================
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const result = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const currentline = lines[i].split(',');
+                if(currentline.length < 4) continue; // Skip jika data tidak valid
+                
+                const obj = {};
+                // Sesuai dengan format baru: No, Nama, NISN, Status, Sertifikat
+                obj['No'] = currentline[0] ? currentline[0].trim() : '';
+                obj['Nama'] = currentline[1] ? currentline[1].trim() : '';
+                obj['NISN'] = currentline[2] ? currentline[2].trim() : '';
+                obj['Status'] = currentline[3] ? currentline[3].trim() : '';
+                
+                // Ambil link URL (jika ada) dan gabungkan koma jika link URL terpecah
+                if(currentline.length >= 5) {
+                    obj['Sertifikat'] = currentline.slice(4).join(',').trim();
+                } else {
+                    obj['Sertifikat'] = '-';
+                }
+                
+                result.push(obj);
+            }
+            return result;
+        }
+        
+        const databaseSiswa = parseCSV(dataCSV);
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            if(pageId === 'page-cek'){
+                document.getElementById('input-nisn').value = '';
+                document.getElementById('result-container').style.display = 'none';
+            }
+        }
+
+        const countDownDate = new Date("May 4, 2026 13:00:00").getTime();
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").textContent = days.toString().padStart(2, '0');
+                document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+            } else {
+                clearInterval(timerInterval);
+                document.getElementById("timer-wrapper").style.display = "none";
+                
+                const btnMasuk = document.getElementById("btn-masuk");
+                btnMasuk.removeAttribute("disabled");
+                btnMasuk.textContent = "MASUK KE HALAMAN PENGUMUMAN";
+                btnMasuk.onclick = function() { showPage('page-sambutan'); };
+            }
+        }, 1000);
+
+        function cekKelulusan() {
+            const inputNISN = document.getElementById('input-nisn').value.trim();
+            const resultBox = document.getElementById('result-container');
+            const resNama = document.getElementById('res-nama');
+            const resNisn = document.getElementById('res-nisn');
+            const resStatus = document.getElementById('res-status');
+            const resPesan = document.getElementById('res-pesan');
+            const printBtnContainer = document.getElementById('print-btn-container');
+
+            resultBox.className = 'result-box';
+            resultBox.style.display = 'block';
+            printBtnContainer.style.display = 'none';
+
+            if (!inputNISN) {
+                resultBox.classList.add('result-error');
+                resNama.textContent = "-";
+                resNisn.textContent = "-";
+                resStatus.textContent = "ERROR";
+                resPesan.textContent = "Harap masukkan NISN Anda pada kolom input!";
+                return;
+            }
+
+            const dataSiswa = databaseSiswa.find(siswa => siswa.NISN === inputNISN);
+
+            if (dataSiswa) {
+                resNama.textContent = dataSiswa.Nama;
+                resNisn.textContent = dataSiswa.NISN;
+                resStatus.textContent = dataSiswa.Status;
+
+                if (dataSiswa.Status.toUpperCase() === 'LULUS') {
+                    resultBox.classList.add('result-lulus');
+                    resPesan.textContent = "Selamat! Anda dinyatakan LULUS. Silakan Unduh Sertifikat Lulus Anda melalui tombol di bawah.";
+                    
+                    // Cek Link Sertifikat
+                    if (dataSiswa.Sertifikat && dataSiswa.Sertifikat !== '-' && dataSiswa.Sertifikat.startsWith('http')) {
+                        printBtnContainer.innerHTML = <a href="${dataSiswa.Sertifikat}" target="_blank" class="btn btn-gold" style="text-decoration:none;">Unduh Sertifikat (Gambar/PDF)</a>;
+                    } else {
+                        // Tombol print backup jika link tidak ada
+                        printBtnContainer.innerHTML = <button class="btn btn-gold" onclick="window.print()">Cetak Halaman (PDF)</button>;
+                    }
+                    
+                    printBtnContainer.style.display = 'block';
+                } else {
+                    resultBox.classList.add('result-gagal');
+                    resPesan.textContent = "Maaf, Anda dinyatakan TIDAK LULUS. Tetap semangat dan pantang menyerah!";
+                }
+            } else {
+                resultBox.classList.add('result-error');
+                resNama.textContent = "-";
+                resNisn.textContent = inputNISN;
+                resStatus.textContent = "DATA TIDAK DITEMUKAN";
+                resPesan.textContent = "NISN yang Anda cari tidak terdaftar. Silakan cek kembali.";
+            }
+        }
+
+        document.getElementById('input-nisn').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                cekKelulusan();
+            }
+        });
+    </script>
+</body>
+</html>
